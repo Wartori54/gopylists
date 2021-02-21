@@ -273,7 +273,7 @@ func (plist *PyList) Count(obj interface{}) int {
 
 func In(array interface{}, obj interface{}) bool {
 	isin := false
-	if strings.Replace(reflect.TypeOf(array).String(), "[]", "", -1) != reflect.TypeOf(obj).String() {
+	if strings.Replace(reflect.TypeOf(array).String(), "[]", "", -1) != reflect.TypeOf(obj).String() && reflect.TypeOf(array).String() != "main.PyList" {
 		panic("array and object are not same type")
 	}
 	switch v := array.(type) {
