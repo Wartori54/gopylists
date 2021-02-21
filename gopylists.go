@@ -410,6 +410,13 @@ func In(array interface{}, obj interface{}) bool {
 				break
 			}
 		}
+	case PyList:
+		for i := 0; i < v.GetLength(); i++ {
+			if v.Get(uint(i)) == obj {
+				isin = true
+				break
+			}
+		}
 	// case rune:
 	default:
 		panic("unrecongized type")
