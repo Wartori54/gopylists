@@ -1,5 +1,5 @@
 # gopylists
-A module for go that adds multiple type arrays
+A module for go that adds multiple type arrays.
 
 ## How to use
 ```go
