@@ -440,10 +440,14 @@ func In(array interface{}, obj interface{}) bool {
 func (plist PyList) String() string {
 	out := "["
 	for i := 0; i < plist.GetLength(); i++ {
-		if i == plist.GetLength()-1 {
-			out += plist.objs[i]
+
+		if plist.types[i] == "string" {
+			out += "'" + plist.objs[i] + "'"
 		} else {
-			out += plist.objs[i] + ", "
+			out += plist.objs[i]
+		}
+		if plist.GetLength()-1 == i {
+			out += ", "
 		}
 	}
 	out += "]"
