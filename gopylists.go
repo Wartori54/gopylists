@@ -12,10 +12,12 @@ type PyList struct {
 	types []string
 }
 
+//Creates a new blank array
 func NewPyList() PyList {
 	return PyList{objs: []string{}, types: []string{}}
 }
 
+//Creates an array from the args of the function
 func NewPyListFromArgs(objs ...interface{}) PyList {
 	plist := NewPyList()
 	for _, obj := range objs {
@@ -24,6 +26,7 @@ func NewPyListFromArgs(objs ...interface{}) PyList {
 	return plist
 }
 
+//Adds a element to the end of the array
 func (plist *PyList) Append(obj interface{}) {
 	switch v := obj.(type) {
 	case int:
@@ -75,6 +78,7 @@ func (plist *PyList) Append(obj interface{}) {
 	// append(plist.objs, strconv.)
 }
 
+//Adds an element to an index to the array
 func (plist *PyList) Insert(obj interface{}, index uint) {
 	switch v := obj.(type) {
 	case int:
@@ -185,11 +189,13 @@ func (plist *PyList) Insert(obj interface{}, index uint) {
 	}
 }
 
+//Removes an element from the array
 func (plist *PyList) Remove(index uint) {
 	plist.objs = append(plist.objs[:index], plist.objs[index+1:]...)
 	plist.types = append(plist.types[:index], plist.types[index+1:]...)
 }
 
+//Returns an element from the array, with an index
 func (plist *PyList) Get(index uint) interface{} {
 	if int(index) >= plist.GetLength() {
 		panic(fmt.Sprintf("index out of range [%d] with length %d", index, plist.GetLength()))
@@ -241,25 +247,28 @@ func (plist *PyList) Get(index uint) interface{} {
 		return plist.objs[index]
 	default:
 		panic("error getting element")
-		return -1
 	}
 }
 
+//Return the lenght of the array
 func (plist *PyList) GetLength() int {
 	return len(plist.objs)
 }
 
+//Deletes everything thats in the array
 func (plist *PyList) Clear() {
 	plist.objs = []string{}
 	plist.types = []string{}
 }
 
+//To concatenate 2 arrays
 func (plist *PyList) Concatenate(plist2 PyList) {
 	for i := 0; i < plist2.GetLength(); i++ {
 		plist.Append(plist2.Get(uint(i)))
 	}
 }
 
+//This is the ".count()" function from python, it will only count if they have the same data and are same type
 func (plist *PyList) Count(obj interface{}) int {
 	times := 0
 	for i := 0; i < plist.GetLength(); i++ {
@@ -271,6 +280,7 @@ func (plist *PyList) Count(obj interface{}) int {
 	return times
 }
 
+// This is the "in" operator from python, array is the array to search on and obj is the element to search, is they are not the same type it will panic
 func In(array interface{}, obj interface{}) bool {
 	isin := false
 	// fmt.Println(reflect.TypeOf(array).String())
@@ -426,6 +436,7 @@ func In(array interface{}, obj interface{}) bool {
 	return isin
 }
 
+//Returns an string of the list
 func (plist PyList) String() string {
 	out := "["
 	for i := 0; i < plist.GetLength(); i++ {
