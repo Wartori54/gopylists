@@ -446,7 +446,7 @@ func (plist PyList) String() string {
 		} else {
 			out += plist.objs[i]
 		}
-		if plist.GetLength()-1 == i {
+		if plist.GetLength()-1 != i {
 			out += ", "
 		}
 	}
